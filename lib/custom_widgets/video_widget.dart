@@ -20,8 +20,17 @@ class _VideoWidgetState extends State<VideoWidget> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   _initVideoPlayer() {
-    _controller = VideoPlayerController.asset(widget.asset);
+    _controller = VideoPlayerController.asset(
+      widget.asset,
+      videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
+    );
     _initializeVideoPlayerFuture = _controller.initialize();
     _controller.setLooping(true);
     _controller.play();

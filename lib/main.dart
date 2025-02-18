@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:sparkl_ui_test/custom_widgets/circular_video_widget.dart';
 import 'package:sparkl_ui_test/custom_widgets/logo_widget.dart';
 import 'package:sparkl_ui_test/custom_widgets/next_button.dart';
 import 'package:sparkl_ui_test/custom_widgets/overlay_widget.dart';
+import 'package:sparkl_ui_test/custom_widgets/stacked_cards.dart';
 import 'package:sparkl_ui_test/custom_widgets/text_widgets.dart';
 import 'package:sparkl_ui_test/custom_widgets/video_widget.dart';
 import 'package:sparkl_ui_test/extensions/build_context.dart';
+import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,12 +40,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int currentPage = 0;
+  int _currentPage = 0;
 
-  buttonOnPress() {
-    if (currentPage < 2) {
+  nextOnPress() {
+    if (_currentPage < 2) {
       setState(() {
-        currentPage++;
+        _currentPage++;
+      });
+    }
+  }
+
+  previousOnPress() {
+    if (_currentPage > 0) {
+      setState(() {
+        _currentPage--;
       });
     }
   }
@@ -58,7 +69,10 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SafeArea(
         child: Stack(
           children: [
-            pages[currentPage],
+            Padding(
+              padding: EdgeInsets.only(top: context.mqSize.height * 0.021),
+              child: pages[_currentPage],
+            ),
 
             // Next Button
             Container(
@@ -67,7 +81,37 @@ class _MyHomePageState extends State<MyHomePage> {
                 horizontal: context.mqSize.width * 0.048,
                 vertical: context.mqSize.height * 0.021,
               ),
-              child: NextButton(onPressed: buttonOnPress),
+              child: Row(
+                children: [
+                  Visibility(
+                    visible: _currentPage >= 1,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        right: context.mqSize.width * 0.036,
+                      ),
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: previousOnPress,
+                        child: CircularStepProgressIndicator(
+                          totalSteps: 3,
+                          currentStep: _currentPage + 1,
+                          selectedColor: Color(0xfffbd044),
+                          unselectedColor: Color(0xffe9dcc7),
+                          width: context.mqSize.height * 0.057,
+                          height: context.mqSize.height * 0.057,
+                          stepSize: 5,
+                          padding: 0.1,
+                          child: Icon(Icons.arrow_back, size: 25),
+                        ),
+                      ),
+                    ),
+                  ),
+                  NextButton(
+                    buttonText: _currentPage == 2 ? 'Get Started' : 'Next',
+                    onPressed: nextOnPress,
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -81,7 +125,6 @@ class _MyHomePageState extends State<MyHomePage> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        SizedBox(height: context.mqSize.height * 0.021),
         LogoWidget(
           height: context.mqSize.height * 0.045,
           alignment: Alignment.center,
@@ -109,11 +152,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
 
                       // Circular student video
-                      ClipOval(
-                        child: SizedBox.square(
-                          dimension: context.mqSize.height * 0.26,
-                          child: VideoWidget(asset: 'assets/studentvideo.mp4'),
-                        ),
+                      CircularVideoWidget(
+                        asset: 'assets/studentvideo.mp4',
+                        dimension: context.mqSize.height * 0.26,
                       ),
 
                       // Circular border
@@ -197,7 +238,67 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget pageTwo(BuildContext context) {
-    return Column();
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: context.mqSize.width * 0.041),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          LogoWidget(
+            height: context.mqSize.height * 0.032,
+            alignment: Alignment.topLeft,
+          ),
+          SizedBox(height: context.mqSize.height * 0.03),
+          TitleText('1-on-1 Live Classes'),
+          SubtitleText(text: ' Learning customized for every student'),
+
+          // Teacher's Video
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              height: context.mqSize.height * 0.097,
+              width: context.mqSize.width * 0.34,
+              margin: EdgeInsets.only(top: context.mqSize.height * 0.06),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade400,
+                    offset: Offset(3.0, 4.0),
+                    blurRadius: 5,
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: SizedBox(
+                  height: context.mqSize.height * 0.097,
+                  width: context.mqSize.width * 0.34,
+                  child: VideoWidget(asset: 'assets/teachervideo.mp4'),
+                ),
+              ),
+            ),
+          ),
+
+          // Stacked stack cards with student video
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(bottom: context.mqSize.height * 0.037),
+                child: StackedCards(),
+              ),
+              Positioned(
+                bottom: 0,
+                child: CircularVideoWidget(
+                  dimension: context.mqSize.height * 0.09,
+                  asset: 'assets/studentvideo.mp4',
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   Widget pageThree(BuildContext context) {

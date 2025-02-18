@@ -21,7 +21,7 @@ class SubtitleText extends StatelessWidget {
 class TitleText extends StatelessWidget {
   final String text;
   final TextAlign textAlign;
-  const TitleText(this.text, {super.key, required this.textAlign});
+  const TitleText(this.text, {super.key, this.textAlign = TextAlign.center});
 
   @override
   Widget build(BuildContext context) {
