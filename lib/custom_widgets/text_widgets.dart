@@ -45,7 +45,7 @@ class ItalicTextWidget extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        fontSize: 17,
+        fontSize: context.mqSize.height * 0.0194,
         fontWeight: FontWeight.bold,
         fontStyle: FontStyle.italic,
       ),

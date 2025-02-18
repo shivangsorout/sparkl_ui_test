@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sparkl_ui_test/custom_widgets/circular_video_widget.dart';
+import 'package:sparkl_ui_test/custom_widgets/custom_chat_bubble.dart';
 import 'package:sparkl_ui_test/custom_widgets/logo_widget.dart';
 import 'package:sparkl_ui_test/custom_widgets/next_button.dart';
 import 'package:sparkl_ui_test/custom_widgets/overlay_widget.dart';
@@ -302,6 +303,40 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget pageThree(BuildContext context) {
-    return Column();
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: context.mqSize.width * 0.041),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          LogoWidget(
+            height: context.mqSize.height * 0.032,
+            alignment: Alignment.topLeft,
+          ),
+          SizedBox(height: context.mqSize.height * 0.03),
+          TitleText(
+            'Doubt Resolution\nwith Teachers',
+            textAlign: TextAlign.left,
+          ),
+          SizedBox(height: context.mqSize.height * 0.034),
+          CustomChatBubble(
+            text:
+                'Do you want to go over\nhow to apply the\nquadratic formula?',
+            isTeacher: true,
+          ),
+          SizedBox(height: context.mqSize.height * 0.0205),
+          CustomChatBubble(
+            text: 'Yes, I\'m confused about\nwhen to use it.',
+            isTeacher: false,
+          ),
+          SizedBox(height: context.mqSize.height * 0.0205),
+          CustomChatBubble(
+            text:
+                'You can use it when the\nequation is in the form ax\u00B2 +\nbx + c = 0. Let me show you\na quick example to clarify.',
+            isTeacher: true,
+            rightPadding: 0.048,
+          ),
+        ],
+      ),
+    );
   }
 }

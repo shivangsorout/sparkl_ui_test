@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sparkl_ui_test/extensions/build_context.dart';
 
 class NextButton extends StatelessWidget {
   final String buttonText;
@@ -16,7 +17,10 @@ class NextButton extends StatelessWidget {
         color: Color(0xfffbd044),
         child: Text(
           buttonText,
-          style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+          style: TextStyle(
+            fontSize: context.mqSize.height * 0.0194,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );
