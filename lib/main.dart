@@ -51,7 +51,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   // For Teacher's video animation
   late AnimationController _controller2;
-  late Animation<double> _positionAnimationC2;
+  late Animation<Alignment> _positionAnimationC2;
+  late Animation<double> _widthAnimationC2;
+  late Animation<double> _heightAnimationC2;
+  late Animation<double> _borderAnimationC2;
+  late Animation<Offset> _shadowAnimationC2;
 
   // For Left Overlays animation
   late AnimationController _controller3;
@@ -63,12 +67,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   // For Student's video animation
   late AnimationController _controller5;
-  late Animation<double> _positionAnimationC5;
+  late Animation<Alignment> _positionAnimationC5;
   late Animation<double> _sizeAnimationC5;
 
   // For Stacked Cards animation
   late AnimationController _controller6;
   late List<Animation<Offset>> _positionAnimationC6;
+
+  // For Chat Bubbles animation
+  late AnimationController _controller7;
+  late List<Animation<double>> _sizeAnimationC7;
 
   final PageController _pageController = PageController();
   bool _isAnimating = false;
@@ -77,6 +85,18 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     initializeAnimations();
+  }
+
+  @override
+  void dispose() {
+    _controller1.dispose();
+    _controller2.dispose();
+    _controller3.dispose();
+    _controller4.dispose();
+    _controller5.dispose();
+    _controller6.dispose();
+    _controller7.dispose();
+    super.dispose();
   }
 
   initializeAnimations() {
@@ -118,11 +138,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       duration: Duration(seconds: 1),
     );
 
-    // Vertical movement
-    _positionAnimationC2 = Tween<double>(
-      begin: -1.7,
-      end: -0.57,
-    ).animate(CurvedAnimation(parent: _controller2, curve: Curves.easeInOut));
+    setC2ForFirstAnimation();
 
     // // For Left Overlays animation
     _controller3 = AnimationController(
@@ -166,17 +182,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       duration: Duration(seconds: 1),
     );
 
-    // Vertical movement
-    _positionAnimationC5 = Tween<double>(
-      begin: -0.025,
-      end: 0.45,
-    ).animate(CurvedAnimation(parent: _controller5, curve: Curves.easeInOut));
-
-    // Scale Transformation
-    _sizeAnimationC5 = Tween<double>(
-      begin: 0.26,
-      end: 0.09,
-    ).animate(CurvedAnimation(parent: _controller5, curve: Curves.easeInOut));
+    setC5ForFirstAnimation();
 
     // // For Stacked Cards animation
     _controller6 = AnimationController(
@@ -199,6 +205,106 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         CurvedAnimation(parent: _controller6, curve: Curves.elasticOut),
       ),
     ];
+
+    // // For chat bubble animation
+    _controller7 = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 2),
+    );
+
+    // Scale up
+    _sizeAnimationC7 = [
+      Tween<double>(begin: 0, end: 1).animate(
+        CurvedAnimation(
+          parent: _controller7,
+          curve: Interval(0.5, 0.65, curve: Curves.easeIn),
+        ),
+      ),
+      Tween<double>(begin: 0, end: 1).animate(
+        CurvedAnimation(
+          parent: _controller7,
+          curve: Interval(0.65, 0.8, curve: Curves.easeIn),
+        ),
+      ),
+      Tween<double>(begin: 0, end: 1).animate(
+        CurvedAnimation(
+          parent: _controller7,
+          curve: Interval(0.8, 0.95, curve: Curves.easeIn),
+        ),
+      ),
+    ];
+  }
+
+  setC2ForFirstAnimation({bool reset = false}) {
+    // Vertical movement
+    _positionAnimationC2 = Tween<Alignment>(
+      begin: Alignment(0, -1.7),
+      end: Alignment(0, -0.57),
+    ).animate(CurvedAnimation(parent: _controller2, curve: Curves.easeInOut));
+
+    // Shape animation
+    _widthAnimationC2 = AlwaysStoppedAnimation(0.34);
+    _heightAnimationC2 = AlwaysStoppedAnimation(0.097);
+    _borderAnimationC2 = AlwaysStoppedAnimation(15);
+    _shadowAnimationC2 = AlwaysStoppedAnimation(Offset(3.0, 4.0));
+
+    if (reset) {
+      _controller2.forward(from: 1);
+    }
+  }
+
+  setC2ForSecondAnimation() {
+    _widthAnimationC2 = Tween<double>(
+      begin: 0.34,
+      end: 0.096,
+    ).animate(CurvedAnimation(parent: _controller2, curve: Curves.easeInOut));
+    _heightAnimationC2 = Tween<double>(
+      begin: 0.097,
+      end: 0.045,
+    ).animate(CurvedAnimation(parent: _controller2, curve: Curves.easeInOut));
+    _borderAnimationC2 = Tween<double>(
+      begin: 15,
+      end: 60,
+    ).animate(CurvedAnimation(parent: _controller2, curve: Curves.easeInOut));
+    _shadowAnimationC2 = Tween<Offset>(
+      begin: Offset(3.0, 4.0),
+      end: Offset(0, 0),
+    ).animate(CurvedAnimation(parent: _controller2, curve: Curves.easeInOut));
+    _positionAnimationC2 = Tween<Alignment>(
+      begin: Alignment(0, -0.57),
+      end: Alignment(-0.915, -0.598),
+    ).animate(CurvedAnimation(parent: _controller2, curve: Curves.easeInOut));
+  }
+
+  setC5ForFirstAnimation({bool reset = false}) {
+    // Vertical movement
+    _positionAnimationC5 = Tween<Alignment>(
+      begin: Alignment(0, -0.025),
+      end: Alignment(0, 0.45),
+    ).animate(CurvedAnimation(parent: _controller5, curve: Curves.easeInOut));
+
+    // Scale Transformation
+    _sizeAnimationC5 = Tween<double>(
+      begin: 0.26,
+      end: 0.09,
+    ).animate(CurvedAnimation(parent: _controller5, curve: Curves.easeInOut));
+    if (reset) {
+      _controller5.forward(from: 1);
+    }
+  }
+
+  setC5ForSecondAnimation() {
+    // Position movement
+    _positionAnimationC5 = Tween<Alignment>(
+      begin: Alignment(0, 0.45),
+      end: Alignment(0.91, -0.158),
+    ).animate(CurvedAnimation(parent: _controller5, curve: Curves.easeInOut));
+
+    // Scale Transformation
+    _sizeAnimationC5 = Tween<double>(
+      begin: 0.09,
+      end: 0.045,
+    ).animate(CurvedAnimation(parent: _controller5, curve: Curves.easeInOut));
   }
 
   void _nextPage() {
@@ -219,8 +325,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         });
       });
     } else if (_currentPage == 1) {
-      setState(() {
-        _isAnimating = false;
+      setC2ForSecondAnimation();
+      _controller2.reset();
+      _controller2.forward();
+      setC5ForSecondAnimation();
+      _controller5.reset();
+      _controller5.forward();
+      _controller7.forward().then((_) {
+        setState(() {
+          _isAnimating = false;
+        });
       });
     } else {
       setState(() {
@@ -242,9 +356,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
     if (_currentPage == 1) {
       _controller1.reverse();
+      setC2ForFirstAnimation(reset: true);
       _controller2.reverse();
       _controller3.reverse();
       _controller4.reverse();
+      setC5ForFirstAnimation(reset: true);
       _controller5.reverse();
       _controller6.reverse().then((_) {
         setState(() {
@@ -252,8 +368,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         });
       });
     } else if (_currentPage == 2) {
+      _controller7.reset();
       _controller6.reset();
-      _controller6.forward().then((_) {
+      _controller6.forward();
+      _controller2.reverse();
+      _controller5.reverse().then((_) {
         setState(() {
           _isAnimating = false;
         });
@@ -297,26 +416,28 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               builder: (context, child) {
                 return Align(
                   // alignment: Alignment(0, -0.57), //desired position
-                  alignment: Alignment(0, _positionAnimationC2.value),
-                  child: Container(
-                    height: context.mqSize.height * 0.097,
-                    width: context.mqSize.width * 0.34,
-                    margin: EdgeInsets.only(top: context.mqSize.height * 0.06),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.shade400,
-                          offset: Offset(3.0, 4.0),
-                          blurRadius: 5,
+                  alignment: _positionAnimationC2.value,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: context.mqSize.height * 0.06),
+                    child: Container(
+                      height: context.mqSize.height * _heightAnimationC2.value,
+                      width: context.mqSize.width * _widthAnimationC2.value,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          _borderAnimationC2.value,
                         ),
-                      ],
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: SizedBox(
-                        height: context.mqSize.height * 0.097,
-                        width: context.mqSize.width * 0.34,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.shade400,
+                            offset: _shadowAnimationC2.value,
+                            blurRadius: 5,
+                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(
+                          _borderAnimationC2.value,
+                        ),
                         child: VideoWidget(asset: 'assets/teachervideo.mp4'),
                       ),
                     ),
@@ -356,7 +477,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               animation: _controller5,
               builder: (context, child) {
                 return Align(
-                  alignment: Alignment(0, _positionAnimationC5.value),
+                  alignment: _positionAnimationC5.value,
                   child: CircularVideoWidget(
                     asset: 'assets/studentvideo.mp4',
                     dimension: context.mqSize.height * _sizeAnimationC5.value,
@@ -594,11 +715,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             text:
                 'Do you want to go over\nhow to apply the\nquadratic formula?',
             isTeacher: true,
+            sizeAnimation: _sizeAnimationC7[0],
           ),
           SizedBox(height: context.mqSize.height * 0.0205),
           CustomChatBubble(
             text: 'Yes, I\'m confused about\nwhen to use it.',
             isTeacher: false,
+            sizeAnimation: _sizeAnimationC7[1],
           ),
           SizedBox(height: context.mqSize.height * 0.0205),
           CustomChatBubble(
@@ -606,6 +729,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 'You can use it when the\nequation is in the form ax\u00B2 +\nbx + c = 0. Let me show you\na quick example to clarify.',
             isTeacher: true,
             rightPadding: 0.048,
+            showVideo: true,
+            sizeAnimation: _sizeAnimationC7[2],
           ),
         ],
       ),
