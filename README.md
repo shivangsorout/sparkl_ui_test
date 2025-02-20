@@ -1,16 +1,51 @@
 # sparkl_ui_test
 
-A new Flutter project.
+Sparkl OnBoarding Screen Implementation with Animations
 
-## Getting Started
+# Building and Running the Flutter Application
 
-This project is a starting point for a Flutter application.
+## Prerequisites:
+Before you begin, ensure you have the following installed:
+- **Flutter SDK:** Follow the official Flutter installation instructions for your operating system.
+- **Dart SDK:** Flutter requires the Dart SDK. It's included with the Flutter SDK, so you don't need to install it separately.
+- **Android Studio/VS code or Xcode:** Depending on whether you're targeting Android or iOS, you'll need either Android Studio/VS code or Xcode installed.
 
-A few resources to get you started if this is your first Flutter project:
+## Getting Started:
+1. Clone the repository:
+	```
+	git clone https://github.com/shivangsorout/sparkl_ui_test
+	```
+2. Navigate to the project directory:
+	```
+	cd <project_directory>
+	```
+3. Install dependencies:
+	```
+	flutter pub get
+	```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Running the Application:
+- **Android**   
+Ensure you have an Android device connected via USB or an Android emulator running.   
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Run the command in terminal:
+ ```
+ flutter run
+ ```
+- **iOS**   
+Ensure you have a macOS machine with Xcode installed.   
+
+- Run the command in terminal:
+ ```
+ flutter run
+ ```
+
+## Features implemented:
+### Expected Features:
+ - [x] Implemented Static UI as it is.
+ - [x] Implemented all animations as specified
+ - [x] Implemented background spray animation
+ - [x] Implemented camera integration
+
+## NOTE
+**Some elements of the UI may be misplaced as I have only one device(Samsung S21 FE) to test the application UI. So some elements may be misplaced otherwise all features were implemented as it is.**
