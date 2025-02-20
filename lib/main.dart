@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:sparkl_ui_test/custom_widgets/background_animation.dart';
 import 'package:sparkl_ui_test/custom_widgets/circular_video_widget.dart';
 import 'package:sparkl_ui_test/custom_widgets/custom_chat_bubble.dart';
 import 'package:sparkl_ui_test/custom_widgets/logo_widget.dart';
@@ -395,6 +396,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       body: SafeArea(
         child: Stack(
           children: [
+            // Animated  Circle Spray rotation effect
+            BackgroundAnimation(),
+
             // Page View
             Padding(
               padding: EdgeInsets.only(top: context.mqSize.height * 0.095),
