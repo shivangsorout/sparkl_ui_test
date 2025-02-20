@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sparkl_ui_test/custom_widgets/background_animation.dart';
@@ -13,7 +14,12 @@ import 'package:sparkl_ui_test/custom_widgets/video_widget.dart';
 import 'package:sparkl_ui_test/extensions/build_context.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
-void main() {
+late List<CameraDescription> camerasList;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  camerasList = await availableCameras();
   runApp(const MyApp());
 }
 
@@ -24,6 +30,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.deepPurple,
@@ -485,6 +492,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   child: CircularVideoWidget(
                     asset: 'assets/studentvideo.mp4',
                     dimension: context.mqSize.height * _sizeAnimationC5.value,
+                    showCamera: true,
                   ),
                 );
               },
@@ -653,7 +661,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     children: [
                       // Background lottie animation
                       Transform.scale(
-                        scale: 1.4,
+                        scale: context.mqSize.height * 0.0016,
                         child: Lottie.asset(
                           'assets/sparkl_shape_shift_lottie.json',
                         ),
