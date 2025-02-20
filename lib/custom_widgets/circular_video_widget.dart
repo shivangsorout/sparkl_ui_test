@@ -31,6 +31,12 @@ class _CircularVideoWidgetState extends State<CircularVideoWidget> {
     }
   }
 
+  @override
+  void dispose() {
+    _cameraController.dispose();
+    super.dispose();
+  }
+
   initializingCamera() {
     _cameraController
         .initialize()

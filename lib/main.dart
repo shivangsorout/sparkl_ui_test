@@ -107,6 +107,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  // Initializing Animations
   initializeAnimations() {
     // // For Logo Animation
     _controller1 = AnimationController(
@@ -243,6 +244,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     ];
   }
 
+  // Animation value setter for second controller
   setC2ForFirstAnimation({bool reset = false}) {
     // Vertical movement
     _positionAnimationC2 = Tween<Alignment>(
@@ -261,6 +263,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     }
   }
 
+  // Animation value setter for second controller
   setC2ForSecondAnimation() {
     _widthAnimationC2 = Tween<double>(
       begin: 0.34,
@@ -284,6 +287,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     ).animate(CurvedAnimation(parent: _controller2, curve: Curves.easeInOut));
   }
 
+  // Animation value setter for fifth controller
   setC5ForFirstAnimation({bool reset = false}) {
     // Vertical movement
     _positionAnimationC5 = Tween<Alignment>(
@@ -301,6 +305,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     }
   }
 
+  // Animation value setter for fifth controller
   setC5ForSecondAnimation() {
     // Position movement
     _positionAnimationC5 = Tween<Alignment>(
@@ -315,6 +320,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     ).animate(CurvedAnimation(parent: _controller5, curve: Curves.easeInOut));
   }
 
+  // Next Page On Press method
   void _nextPage() {
     if (_isAnimating) return;
     setState(() {
@@ -356,6 +362,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     );
   }
 
+  // Previous Page On Press method
   void _previousPage() {
     if (_isAnimating) return;
     setState(() {
@@ -394,6 +401,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    // Initializing Pages
     List<Widget> pages = [
       pageOne(context),
       pageTwo(context),
@@ -403,10 +411,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       body: SafeArea(
         child: Stack(
           children: [
-            // Animated  Circle Spray rotation effect
+            // // Animated  Circle Spray rotation effect
             BackgroundAnimation(),
 
-            // Page View
+            // // Page View
             Padding(
               padding: EdgeInsets.only(top: context.mqSize.height * 0.095),
               child: PageView(
@@ -421,7 +429,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               ),
             ),
 
-            // Teacher's Video
+            // // Teacher's Video
             AnimatedBuilder(
               animation: _controller2,
               builder: (context, child) {
@@ -457,7 +465,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               },
             ),
 
-            // Animated Logo
+            // // Animated Logo
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -483,7 +491,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               ],
             ),
 
-            // Circular student video
+            // // Circular student video
             AnimatedBuilder(
               animation: _controller5,
               builder: (context, child) {
@@ -498,7 +506,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               },
             ),
 
-            // Overlay Holder (Left slide animation)
+            // // Overlay Holder (Left slide animation)
             SlideTransition(
               position: _positionAnimationC3,
               child: Align(
@@ -547,7 +555,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               ),
             ),
 
-            // Overlay Holder (Right slide animation)
+            // // Overlay Holder (Right slide animation)
             SlideTransition(
               position: _positionAnimationC4,
               child: Align(
@@ -595,7 +603,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               ),
             ),
 
-            // Next Button
+            // // Next Button
             Container(
               alignment: Alignment.bottomCenter,
               padding: EdgeInsets.symmetric(
@@ -640,6 +648,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     );
   }
 
+  // Page One method for PageView
   Widget pageOne(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -690,6 +699,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     );
   }
 
+  // Page Two method for PageView
   Widget pageTwo(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: context.mqSize.width * 0.041),
@@ -712,6 +722,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     );
   }
 
+  // Page Three method for PageView
   Widget pageThree(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: context.mqSize.width * 0.041),
