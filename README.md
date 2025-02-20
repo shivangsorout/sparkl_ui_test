@@ -2,6 +2,10 @@
 
 Sparkl OnBoarding Screen Implementation with Animations
 
+
+![Sparkl_Implementation_Video](https://github.com/user-attachments/assets/f23aa30f-c194-40b8-a12d-b00a299b9aab)
+
+
 # Building and Running the Flutter Application
 
 ## Prerequisites:
